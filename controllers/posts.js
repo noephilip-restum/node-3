@@ -30,15 +30,21 @@ module.exports = {
     const db = req.app.get("db");
     const { comments } = req.query;
 
-    db.posts.find(req.params.id).then(post => {
-      comments
-        ? db.comments
-            .find({ postId: req.params.id })
-            .then(comment =>
-              res.status(200).json({ post: post, comments: comment })
-            )
-        : res.status(500).end();
-    });
+    db.posts
+      .find(req.params.id)
+      .then(post => {
+        comments
+          ? db.comments
+              .find({ postId: req.params.id })
+              .then(comment =>
+                res.status(200).json({ post: post, comments: comment })
+              )
+          : res.status(500).end();
+      })
+      .catch(err => {
+        console.error(err);
+        res.status(500).end();
+      });
   },
   updatePost: (req, res) => {
     const db = req.app.get("db");
