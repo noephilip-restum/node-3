@@ -23,6 +23,9 @@ module.exports = {
             ]
           },
           {
+            deepInsert: true
+          },
+          {
             fields: ["id", "email"]
           }
         );
